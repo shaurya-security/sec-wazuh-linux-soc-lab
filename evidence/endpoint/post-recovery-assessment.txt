@@ -1,0 +1,86 @@
+======================================================================
+ Linux Endpoint — Recovery Assessment
+======================================================================
+
+ Host    : recovered-endpoint
+ Time    : 2026-09-09 13:09:02 IST
+ Case    : SOC correlation-chain persistence scenario
+ User    : ssm-user
+
+Scope:
+   • sudo-group modification
+   • successful sudo → ROOT activity
+   • root crontab persistence
+   • persistence execution
+   • immediate recovery decision
+
+
+========================================================================
+[01 — SUDO GROUP STATE]
+========================================================================
+
+COMMAND : getent group sudo
+<sudo group not present>
+FINDING : NOT PRESENT — ssm-user is not currently listed in sudo.
+REASON  : The simulated privileged-group state is no longer present.
+NEXT    : Continue validating the remaining persistence and recovery state.
+
+========================================================================
+[02 — ROOT CRONTAB]
+========================================================================
+
+COMMAND : sudo crontab -l
+<no root crontab>
+FINDING : CLEAN — known lab persistence entry is absent from root's crontab.
+REASON  : The specific persistence mechanism created by the simulation is not currently installed.
+NEXT    : Validate the persistence output and continue recovery assessment.
+
+========================================================================
+[03 — ROOT CRON SPOOL CORROBORATION]
+========================================================================
+
+COMMAND : find root cron spool files
+<no root-owned cron spool file found>
+FINDING : CLEAN — no root-owned cron spool file found.
+REASON  : No root cron spool artifact was returned by this check.
+NEXT    : Continue to execution validation.
+
+========================================================================
+[04 — PERSISTENCE EXECUTION]
+========================================================================
+
+COMMAND : test -f /tmp/soc-lab.log
+<file does not exist>
+FINDING : CLEAN — persistence output file is absent.
+REASON  : The known persistence output artifact is not present.
+NEXT    : Continue with recovery assessment.
+
+========================================================================
+[05 — PERSISTENCE ARTIFACT METADATA]
+========================================================================
+FINDING : CLEAN — persistence output artifact does not exist.
+REASON  : No metadata is available because the expected output file is absent.
+NEXT    : Continue to final decision.
+
+========================================================================
+[06 — TARGETED PERSISTENCE SEARCH]
+========================================================================
+
+COMMAND : grep -RFl 'SOC_LAB_PERSISTENCE_TEST' targeted cron locations
+<no additional matching persistence locations>
+FINDING : CLEAN — no additional cron location contains the known persistence marker.
+REASON  : Only the known root-cron mechanism was identified by this targeted search.
+NEXT    : Proceed to final recovery decision.
+
+========================================================================
+[FINAL RECOVERY DECISION]
+========================================================================
+DECISION       : NO KNOWN PERSISTENCE FOUND
+RECOVERY STATE : ASSESSMENT
+
+REASONING
+  The artifacts associated with this specific lab chain were not
+  observed. This does not constitute proof of full host integrity.
+
+========================================================================
+Assessment complete.

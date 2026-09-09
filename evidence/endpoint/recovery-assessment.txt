@@ -1,0 +1,116 @@
+======================================================================
+ Linux Endpoint — Recovery Assessment
+======================================================================
+
+ Host    : linux-endpoint
+ Time    : 2026-09-09 12:30:25 IST
+ Case    : SOC correlation-chain persistence scenario
+ User    : ssm-user
+
+Scope:
+   • sudo-group modification
+   • successful sudo → ROOT activity
+   • root crontab persistence
+   • persistence execution
+   • immediate recovery decision
+
+
+========================================================================
+[01 — SUDO GROUP STATE]
+========================================================================
+
+COMMAND : getent group sudo
+sudo:x:1002:ssm-user
+FINDING : OBSERVED — ssm-user is currently a member of sudo.
+REASON  : This matches the simulated 2961 step and confirms the account currently has sudo-group membership.
+NEXT    : Correlate the membership change with the original alert timeline; do not treat membership alone as proof of compromise.
+
+========================================================================
+[02 — ROOT CRONTAB]
+========================================================================
+
+COMMAND : sudo crontab -l
+*/5 * * * * /bin/echo SOC_LAB_PERSISTENCE_TEST >> /tmp/soc-lab.log
+FINDING : CONFIRMED — lab persistence remains installed in root's crontab.
+REASON  : The root crontab contains the exact persistence command created by the simulated 2833 step.
+NEXT    : Preserve the evidence. Do not rely on deleting this entry as proof that the host is trustworthy.
+
+========================================================================
+[03 — ROOT CRON SPOOL CORROBORATION]
+========================================================================
+
+COMMAND : find root cron spool files
+/var/spool/cron/root owner=root mode=600 modified=2026-09-09 12:23:21.8380707640
+FINDING : EXPECTED — root cron spool exists.
+REASON  : The spool file is the backing storage for the root crontab and corroborates that root cron configuration exists.
+NEXT    : Use the crontab contents, rather than spool-file existence, as the persistence determination.
+
+========================================================================
+[04 — PERSISTENCE EXECUTION]
+========================================================================
+
+COMMAND : wc -l /tmp/soc-lab.log; grep -Fc 'SOC_LAB_PERSISTENCE_TEST' /tmp/soc-lab.log; tail -n 1 /tmp/soc-lab.log
+lines=2
+marker_matches=2
+last_line=SOC_LAB_PERSISTENCE_TEST
+FINDING : CONFIRMED — persistence has executed successfully.
+REASON  : The expected marker is present in /tmp/soc-lab.log, demonstrating execution of the scheduled persistence command.
+NEXT    : Treat the endpoint as compromised until recovery is completed.
+
+========================================================================
+[05 — PERSISTENCE ARTIFACT METADATA]
+========================================================================
+
+COMMAND : stat /tmp/soc-lab.log
+path=/tmp/soc-lab.log
+owner=root:root
+mode=644
+size=50
+modified=2026-09-09 12:30:02.242246941 +0530
+FINDING : OBSERVED — persistence output artifact exists.
+REASON  : The file is the expected output target of the root cron command.
+NEXT    : Preserve it as incident evidence; do not use the file alone to determine host integrity.
+
+========================================================================
+[06 — TARGETED PERSISTENCE SEARCH]
+========================================================================
+
+COMMAND : grep -RFl 'SOC_LAB_PERSISTENCE_TEST' targeted cron locations
+/var/spool/cron/root
+FINDING : CLEAN — no additional cron location contains the known persistence marker.
+REASON  : Only the known root-cron mechanism was identified by this targeted search.
+NEXT    : Proceed to final recovery decision.
+
+========================================================================
+[FINAL RECOVERY DECISION]
+========================================================================
+DECISION       : REBUILD
+RECOVERY STATE : PRE-RECOVERY
+
+WHAT WAS FOUND
+  • Root-level persistence is confirmed.
+  • The persistence command has executed successfully.
+  • The persistence mechanism is directly tied to the simulated
+    2833 root-crontab modification.
+  • The endpoint therefore cannot be considered trustworthy
+    based on targeted cleanup alone.
+
+REASONING
+  The assessment confirms the attack chain reached a privileged
+  persistence stage. Removing the known cron entry would remove
+  the observed IOC, but would not establish that no additional
+  modification or persistence exists.
+
+RECOVERY ACTION
+  1. Preserve the current endpoint and evidence.
+  2. Isolate the endpoint.
+  3. Rebuild from a known-good image.
+  4. Rotate potentially exposed credentials.
+  5. Restore required configuration from trusted sources.
+  6. Reinstall/validate Wazuh telemetry.
+  7. Validate log ingestion and correlation rules.
+  8. Perform a controlled detection test.
+  9. Return the endpoint to service only after validation.
+
+========================================================================
+Assessment complete.

@@ -1,0 +1,9 @@
+AMI ID:     <environment-specific>
+AMI Name:   soc-lab-linux-endpoint-baseline-<timestamp>
+Region:     <AWS-region>
+Created:    <timestamp>
+Source:     <endpoint-instance-id>
+
+Purpose:
+Known-good endpoint image captured immediately before
+the controlled SOC attack simulation.

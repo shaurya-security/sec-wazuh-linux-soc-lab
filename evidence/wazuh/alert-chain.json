@@ -1,0 +1,238 @@
+{
+  "timestamp": "2026-09-09T12:22:38.431+0530",
+  "rule": {
+    "level": 3,
+    "description": "Successful sudo to ROOT executed.",
+    "id": "5402",
+    "mitre": {
+      "id": [
+        "T1548.003"
+      ],
+      "tactic": [
+        "Privilege Escalation",
+        "Defense Evasion"
+      ],
+      "technique": [
+        "Sudo and Sudo Caching"
+      ]
+    },
+    "firedtimes": 1,
+    "mail": false,
+    "groups": [
+      "syslog",
+      "sudo"
+    ],
+    "pci_dss": [
+      "10.2.5",
+      "10.2.2"
+    ],
+    "gpg13": [
+      "7.6",
+      "7.8",
+      "7.13"
+    ],
+    "gdpr": [
+      "IV_32.2"
+    ],
+    "hipaa": [
+      "164.312.b"
+    ],
+    "nist_800_53": [
+      "AU.14",
+      "AC.7",
+      "AC.6"
+    ],
+    "tsc": [
+      "CC6.8",
+      "CC7.2",
+      "CC7.3"
+    ]
+  },
+  "agent": {
+    "id": "001",
+    "name": "linux-endpoint",
+    "ip": "10.0.1.137"
+  },
+  "manager": {
+    "name": "wazuh-server"
+  },
+  "id": "1788936758.1398804",
+  "full_log": "Sep 09 06:52:38 linux-endpoint sudo[30698]: ssm-user : TTY=pts/0 ; PWD=/home/ssm-user ; USER=root ; COMMAND=/usr/sbin/usermod -aG sudo 
+ssm-user",
+  "predecoder": {
+    "program_name": "sudo",
+    "timestamp": "Sep 09 06:52:38",
+    "hostname": "linux-endpoint"
+  },
+  "decoder": {
+    "parent": "sudo",
+    "name": "sudo",
+    "ftscomment": "First time user executed the sudo command"
+  },
+  "data": {
+    "srcuser": "ssm-user",
+    "dstuser": "root",
+    "tty": "pts/0",
+    "pwd": "/home/ssm-user",
+    "command": "/usr/sbin/usermod -aG sudo ssm-user"
+  },
+  "location": "journald"
+}
+{
+  "timestamp": "2026-09-09T12:28:50.290+0530",
+  "rule": {
+    "level": 3,
+    "description": "Successful sudo to ROOT executed.",
+    "id": "5402",
+    "mitre": {
+      "id": [
+        "T1548.003"
+      ],
+      "tactic": [
+        "Privilege Escalation",
+        "Defense Evasion"
+      ],
+      "technique": [
+        "Sudo and Sudo Caching"
+      ]
+    },
+    "firedtimes": 2,
+    "mail": false,
+    "groups": [
+      "syslog",
+      "sudo"
+    ],
+    "pci_dss": [
+      "10.2.5",
+      "10.2.2"
+    ],
+    "gpg13": [
+      "7.6",
+      "7.8",
+      "7.13"
+    ],
+    "gdpr": [
+      "IV_32.2"
+    ],
+    "hipaa": [
+      "164.312.b"
+    ],
+    "nist_800_53": [
+      "AU.14",
+      "AC.7",
+      "AC.6"
+    ],
+    "tsc": [
+      "CC6.8",
+      "CC7.2",
+      "CC7.3"
+    ]
+  },
+  "agent": {
+    "id": "001",
+    "name": "linux-endpoint",
+    "ip": "10.0.1.137"
+  },
+  "manager": {
+    "name": "wazuh-server"
+  },
+  "id": "1788937130.1417953",
+  "full_log": "Sep 09 06:58:49 linux-endpoint sudo[31073]: ssm-user : TTY=pts/0 ; PWD=/home/ssm-user ; USER=root ; COMMAND=/usr/bin/crontab -l",
+  "predecoder": {
+    "program_name": "sudo",
+    "timestamp": "Sep 09 06:58:49",
+    "hostname": "linux-endpoint"
+  },
+  "decoder": {
+    "parent": "sudo",
+    "name": "sudo",
+    "ftscomment": "First time user executed the sudo command"
+  },
+  "data": {
+    "srcuser": "ssm-user",
+    "dstuser": "root",
+    "tty": "pts/0",
+    "pwd": "/home/ssm-user",
+    "command": "/usr/bin/crontab -l"
+  },
+  "location": "journald"
+}
+{
+  "timestamp": "2026-09-09T12:30:26.328+0530",
+  "rule": {
+    "level": 3,
+    "description": "Successful sudo to ROOT executed.",
+    "id": "5402",
+    "mitre": {
+      "id": [
+        "T1548.003"
+      ],
+      "tactic": [
+        "Privilege Escalation",
+        "Defense Evasion"
+      ],
+      "technique": [
+        "Sudo and Sudo Caching"
+      ]
+    },
+    "firedtimes": 3,
+    "mail": false,
+    "groups": [
+      "syslog",
+      "sudo"
+    ],
+    "pci_dss": [
+      "10.2.5",
+      "10.2.2"
+    ],
+    "gpg13": [
+      "7.6",
+      "7.8",
+      "7.13"
+    ],
+    "gdpr": [
+      "IV_32.2"
+    ],
+    "hipaa": [
+      "164.312.b"
+    ],
+    "nist_800_53": [
+      "AU.14",
+      "AC.7",
+      "AC.6"
+    ],
+    "tsc": [
+      "CC6.8",
+      "CC7.2",
+      "CC7.3"
+    ]
+  },
+  "agent": {
+    "id": "001",
+    "name": "linux-endpoint",
+    "ip": "10.0.1.137"
+  },
+  "manager": {
+    "name": "wazuh-server"
+  },
+  "id": "1788937226.1420201",
+  "full_log": "Sep 09 07:00:25 linux-endpoint sudo[31255]: ssm-user : TTY=pts/0 ; PWD=/home/ssm-user ; USER=root ; COMMAND=/usr/bin/crontab -l",
+  "predecoder": {
+    "program_name": "sudo",
+    "timestamp": "Sep 09 07:00:25",
+    "hostname": "linux-endpoint"
+  },
+  "decoder": {
+    "parent": "sudo",
+    "name": "sudo",
+    "ftscomment": "First time user executed the sudo command"
+  },
+  "data": {
+    "srcuser": "ssm-user",
+    "dstuser": "root",
+    "tty": "pts/0",
+    "pwd": "/home/ssm-user",
+    "command": "/usr/bin/crontab -l"
+  },
+  "location": "journald"
+}

@@ -1,0 +1,397 @@
+{
+  "timestamp": "2026-09-09T12:22:44.278+0530",
+  "rule": {
+    "level": 12,
+    "description": "SOC: Multiple successful sudo-to-ROOT executions detected within 60s",
+    "id": "110011",
+    "mitre": {
+      "id": [
+        "T1548.003"
+      ],
+      "tactic": [
+        "Privilege Escalation",
+        "Defense Evasion"
+      ],
+      "technique": [
+        "Sudo and Sudo Caching"
+      ]
+    },
+    "frequency": 2,
+    "firedtimes": 1,
+    "mail": true,
+    "groups": [
+      "local",
+      "soc_correlation",
+      "privilege_escalation",
+      "soc_correlation"
+    ]
+  },
+  "agent": {
+    "id": "001",
+    "name": "linux-endpoint",
+    "ip": "10.0.1.137"
+  },
+  "manager": {
+    "name": "wazuh-server"
+  },
+  "id": "1788936764.1409181",
+  "full_log": "Sep 09 06:52:43 linux-endpoint sudo[30724]: ssm-user : TTY=pts/1 ; PWD=/home/ssm-user ; USER=root ; COMMAND=/usr/bin/whoami",
+  "predecoder": {
+    "program_name": "sudo",
+    "timestamp": "Sep 09 06:52:43",
+    "hostname": "linux-endpoint"
+  },
+  "decoder": {
+    "parent": "sudo",
+    "name": "sudo",
+    "ftscomment": "First time user executed the sudo command"
+  },
+  "data": {
+    "srcuser": "ssm-user",
+    "dstuser": "root",
+    "tty": "pts/1",
+    "pwd": "/home/ssm-user",
+    "command": "/usr/bin/whoami"
+  },
+  "location": "journald"
+}
+{
+  "timestamp": "2026-09-09T12:22:50.266+0530",
+  "rule": {
+    "level": 12,
+    "description": "SOC: Multiple successful sudo-to-ROOT executions detected within 60s",
+    "id": "110011",
+    "mitre": {
+      "id": [
+        "T1548.003"
+      ],
+      "tactic": [
+        "Privilege Escalation",
+        "Defense Evasion"
+      ],
+      "technique": [
+        "Sudo and Sudo Caching"
+      ]
+    },
+    "frequency": 2,
+    "firedtimes": 2,
+    "mail": true,
+    "groups": [
+      "local",
+      "soc_correlation",
+      "privilege_escalation",
+      "soc_correlation"
+    ]
+  },
+  "agent": {
+    "id": "001",
+    "name": "linux-endpoint",
+    "ip": "10.0.1.137"
+  },
+  "manager": {
+    "name": "wazuh-server"
+  },
+  "id": "1788936770.1411911",
+  "full_log": "Sep 09 06:52:48 linux-endpoint sudo[30736]: ssm-user : TTY=pts/1 ; PWD=/home/ssm-user ; USER=root ; COMMAND=/usr/bin/whoami",
+  "predecoder": {
+    "program_name": "sudo",
+    "timestamp": "Sep 09 06:52:48",
+    "hostname": "linux-endpoint"
+  },
+  "decoder": {
+    "parent": "sudo",
+    "name": "sudo",
+    "ftscomment": "First time user executed the sudo command"
+  },
+  "data": {
+    "srcuser": "ssm-user",
+    "dstuser": "root",
+    "tty": "pts/1",
+    "pwd": "/home/ssm-user",
+    "command": "/usr/bin/whoami"
+  },
+  "location": "journald"
+}
+{
+  "timestamp": "2026-09-09T12:23:22.282+0530",
+  "rule": {
+    "level": 12,
+    "description": "SOC: Multiple successful sudo-to-ROOT executions detected within 60s",
+    "id": "110011",
+    "mitre": {
+      "id": [
+        "T1548.003"
+      ],
+      "tactic": [
+        "Privilege Escalation",
+        "Defense Evasion"
+      ],
+      "technique": [
+        "Sudo and Sudo Caching"
+      ]
+    },
+    "frequency": 2,
+    "firedtimes": 3,
+    "mail": true,
+    "groups": [
+      "local",
+      "soc_correlation",
+      "privilege_escalation",
+      "soc_correlation"
+    ]
+  },
+  "agent": {
+    "id": "001",
+    "name": "linux-endpoint",
+    "ip": "10.0.1.137"
+  },
+  "manager": {
+    "name": "wazuh-server"
+  },
+  "id": "1788936802.1413722",
+  "full_log": "Sep 09 06:53:21 linux-endpoint sudo[30776]: ssm-user : TTY=pts/0 ; PWD=/home/ssm-user ; USER=root ; COMMAND=/usr/bin/crontab -l",
+  "predecoder": {
+    "program_name": "sudo",
+    "timestamp": "Sep 09 06:53:21",
+    "hostname": "linux-endpoint"
+  },
+  "decoder": {
+    "parent": "sudo",
+    "name": "sudo",
+    "ftscomment": "First time user executed the sudo command"
+  },
+  "data": {
+    "srcuser": "ssm-user",
+    "dstuser": "root",
+    "tty": "pts/0",
+    "pwd": "/home/ssm-user",
+    "command": "/usr/bin/crontab -l"
+  },
+  "location": "journald"
+}
+{
+  "timestamp": "2026-09-09T12:23:22.428+0530",
+  "rule": {
+    "level": 12,
+    "description": "SOC: Multiple successful sudo-to-ROOT executions detected within 60s",
+    "id": "110011",
+    "mitre": {
+      "id": [
+        "T1548.003"
+      ],
+      "tactic": [
+        "Privilege Escalation",
+        "Defense Evasion"
+      ],
+      "technique": [
+        "Sudo and Sudo Caching"
+      ]
+    },
+    "frequency": 2,
+    "firedtimes": 4,
+    "mail": true,
+    "groups": [
+      "local",
+      "soc_correlation",
+      "privilege_escalation",
+      "soc_correlation"
+    ]
+  },
+  "agent": {
+    "id": "001",
+    "name": "linux-endpoint",
+    "ip": "10.0.1.137"
+  },
+  "manager": {
+    "name": "wazuh-server"
+  },
+  "id": "1788936802.1415586",
+  "full_log": "Sep 09 06:53:21 linux-endpoint sudo[30791]: ssm-user : TTY=pts/0 ; PWD=/home/ssm-user ; USER=root ; COMMAND=/usr/bin/crontab -",
+  "predecoder": {
+    "program_name": "sudo",
+    "timestamp": "Sep 09 06:53:21",
+    "hostname": "linux-endpoint"
+  },
+  "decoder": {
+    "parent": "sudo",
+    "name": "sudo",
+    "ftscomment": "First time user executed the sudo command"
+  },
+  "data": {
+    "srcuser": "ssm-user",
+    "dstuser": "root",
+    "tty": "pts/0",
+    "pwd": "/home/ssm-user",
+    "command": "/usr/bin/crontab -"
+  },
+  "location": "journald"
+}
+{
+  "timestamp": "2026-09-09T12:23:22.443+0530",
+  "rule": {
+    "level": 15,
+    "description": "SOC HIGH: Repeated root sudo executions followed by root crontab modification - possible persistence",
+    "id": "110012",
+    "mitre": {
+      "id": [
+        "T1548.003",
+        "T1053.003"
+      ],
+      "tactic": [
+        "Privilege Escalation",
+        "Defense Evasion",
+        "Execution",
+        "Persistence"
+      ],
+      "technique": [
+        "Sudo and Sudo Caching",
+        "Cron"
+      ]
+    },
+    "frequency": 2,
+    "firedtimes": 1,
+    "mail": true,
+    "groups": [
+      "local",
+      "soc_correlation",
+      "privilege_escalation",
+      "persistence",
+      "soc_correlation"
+    ]
+  },
+  "agent": {
+    "id": "001",
+    "name": "linux-endpoint",
+    "ip": "10.0.1.137"
+  },
+  "manager": {
+    "name": "wazuh-server"
+  },
+  "id": "1788936802.1416615",
+  "full_log": "Sep 09 06:53:21 linux-endpoint crontab[30795]: (root) REPLACE (root)",
+  "predecoder": {
+    "program_name": "crontab",
+    "timestamp": "Sep 09 06:53:21",
+    "hostname": "linux-endpoint"
+  },
+  "decoder": {},
+  "location": "journald"
+}
+{
+  "timestamp": "2026-09-09T12:30:26.475+0530",
+  "rule": {
+    "level": 12,
+    "description": "SOC: Multiple successful sudo-to-ROOT executions detected within 60s",
+    "id": "110011",
+    "mitre": {
+      "id": [
+        "T1548.003"
+      ],
+      "tactic": [
+        "Privilege Escalation",
+        "Defense Evasion"
+      ],
+      "technique": [
+        "Sudo and Sudo Caching"
+      ]
+    },
+    "frequency": 2,
+    "firedtimes": 5,
+    "mail": true,
+    "groups": [
+      "local",
+      "soc_correlation",
+      "privilege_escalation",
+      "soc_correlation"
+    ]
+  },
+  "agent": {
+    "id": "001",
+    "name": "linux-endpoint",
+    "ip": "10.0.1.137"
+  },
+  "manager": {
+    "name": "wazuh-server"
+  },
+  "id": "1788937226.1422002",
+  "full_log": "Sep 09 07:00:25 linux-endpoint sudo[31275]: ssm-user : TTY=pts/0 ; PWD=/home/ssm-user ; USER=root ; COMMAND=/usr/bin/find /var/spool/cr
+on /var/spool/cron/crontabs -maxdepth 1 -type f -user root -printf '%p owner=%u mode=%m modified=%TY-%Tm-%Td %TH:%TM:%TS\\\\n'",
+  "predecoder": {
+    "program_name": "sudo",
+    "timestamp": "Sep 09 07:00:25",
+    "hostname": "linux-endpoint"
+  },
+  "decoder": {
+    "parent": "sudo",
+    "name": "sudo",
+    "ftscomment": "First time user executed the sudo command"
+  },
+  "data": {
+    "srcuser": "ssm-user",
+    "dstuser": "root",
+    "tty": "pts/0",
+    "pwd": "/home/ssm-user",
+    "command": "/usr/bin/find /var/spool/cron /var/spool/cron/crontabs -maxdepth 1 -type f -user root -printf '%p owner=%u mode=%m modified=%TY-%Tm-%T
+d %TH:%TM:%TS\\\\n'"
+  },
+  "location": "journald"
+}
+{
+  "timestamp": "2026-09-09T12:30:26.504+0530",
+  "rule": {
+    "level": 12,
+    "description": "SOC: Multiple successful sudo-to-ROOT executions detected within 60s",
+    "id": "110011",
+    "mitre": {
+      "id": [
+        "T1548.003"
+      ],
+      "tactic": [
+        "Privilege Escalation",
+        "Defense Evasion"
+      ],
+      "technique": [
+        "Sudo and Sudo Caching"
+      ]
+    },
+    "frequency": 2,
+    "firedtimes": 6,
+    "mail": true,
+    "groups": [
+      "local",
+      "soc_correlation",
+      "privilege_escalation",
+      "soc_correlation"
+    ]
+  },
+  "agent": {
+    "id": "001",
+    "name": "linux-endpoint",
+    "ip": "10.0.1.137"
+  },
+  "manager": {
+    "name": "wazuh-server"
+  },
+  "id": "1788937226.1423667",
+  "full_log": "Sep 09 07:00:25 linux-endpoint sudo[31300]: ssm-user : TTY=pts/0 ; PWD=/home/ssm-user ; USER=root ; COMMAND=/usr/bin/grep -RFl SOC_LAB_
+PERSISTENCE_TEST /etc/cron.d /etc/cron.daily /etc/cron.hourly /etc/cron.weekly /etc/cron.monthly /var/spool/cron /var/spool/cron/crontabs",
+  "predecoder": {
+    "program_name": "sudo",
+    "timestamp": "Sep 09 07:00:25",
+    "hostname": "linux-endpoint"
+  },
+  "decoder": {
+    "parent": "sudo",
+    "name": "sudo",
+    "ftscomment": "First time user executed the sudo command"
+  },
+  "data": {
+    "srcuser": "ssm-user",
+    "dstuser": "root",
+    "tty": "pts/0",
+    "pwd": "/home/ssm-user",
+    "command": "/usr/bin/grep -RFl SOC_LAB_PERSISTENCE_TEST /etc/cron.d /etc/cron.daily /etc/cron.hourly /etc/cron.weekly /etc/cron.monthly /var/spool
+/cron /var/spool/cron/crontabs"
+  },
+  "location": "journald"
+}

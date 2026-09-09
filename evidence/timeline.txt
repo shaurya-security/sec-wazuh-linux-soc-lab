@@ -1,0 +1,189 @@
+SOC LAB — INCIDENT TIMELINE
+============================
+
+Incident: Controlled Linux endpoint compromise simulation
+Endpoint: linux-endpoint
+Manager: Wazuh server
+Date: 2026-09-08
+Timezone: Asia/Kolkata
+
+PRE-INCIDENT
+------------
+2026-09-09 12:17:33 +0530
+Known-good baseline AMI created from the clean Linux endpoint.
+
+AMI:
+  soc-lab-linux-endpoint-baseline-20260909-121429
+  ami-0d58340cece29dd98
+
+Purpose:
+  Recovery image captured before the controlled attack simulation.
+
+
+ATTACK / DETECTION
+------------------
+2026-09-08 12:22:38
+Wazuh rule 5402 detected successful sudo execution.
+
+2026-09-08 12:22:44
+Wazuh rule 110011 generated a correlation alert for repeated
+successful sudo-to-root execution.
+
+2026-09-08 12:22:50
+Wazuh rule 110011 generated another correlation alert.
+
+2026-09-08 12:23:22
+Additional successful sudo activity was detected by rule 110011.
+
+2026-09-08 12:23:22
+Wazuh rule 110011 generated another correlation alert.
+
+2026-09-08 12:23:22
+Wazuh rule 110012 generated a high-severity correlation alert
+for repeated root sudo executions followed by root crontab
+modification, indicating possible persistence.
+
+ADDITIONAL OBSERVED SUDO ACTIVITY
+---------------------------------
+2026-09-08 12:28:50
+Wazuh rule 5402 detected successful sudo execution.
+
+2026-09-08 12:30:26
+Wazuh rule 5402 detected successful sudo execution.
+
+2026-09-08 12:30:26
+Wazuh rule 110011 generated correlation alerts for repeated
+successful sudo-to-root execution.
+
+2026-09-08 12:32:09
+Wazuh rule 5402 detected successful sudo execution.
+
+2026-09-08 12:34:44
+Wazuh rule 5402 detected successful sudo execution.
+
+
+ENDPOINT INVESTIGATION
+----------------------
+The Linux endpoint was examined after the detection sequence.
+
+Observed state:
+
+1. ssm-user was a member of the sudo group.
+
+2. Root's crontab contained:
+
+   */5 * * * * /bin/echo SOC_LAB_PERSISTENCE_TEST >> /tmp/soc-lab.log
+
+3. The root cron spool existed with expected root ownership
+   and restrictive permissions.
+
+4. /tmp/soc-lab.log contained eight persistence-marker entries.
+
+5. The persistence marker had executed successfully under the
+   root cron job.
+
+6. The targeted persistence search identified the root cron
+   spool as the relevant persistence mechanism.
+
+Recovery assessment decision:
+
+   REBUILD
+
+Conclusion:
+
+Root-level persistence was confirmed on the compromised endpoint.
+The endpoint was therefore treated as untrusted.
+
+
+EVIDENCE PRESERVATION
+---------------------
+Wazuh alerts, endpoint recovery-assessment output, screenshots,
+and the incident timeline were preserved.
+
+The compromised endpoint was retained temporarily for evidence
+preservation and was not cleaned in place.
+
+
+RECOVERY
+--------
+A replacement Linux endpoint was launched from the known-good
+baseline AMI captured before the simulation.
+
+Recovery sequence:
+
+  Clean endpoint
+      |
+      v
+  Baseline AMI created
+      |
+      v
+  Controlled attack simulation
+      |
+      v
+  Wazuh detection + endpoint investigation
+      |
+      v
+  Compromised endpoint marked untrusted
+      |
+      v
+  Replacement endpoint launched from baseline AMI
+      |
+      v
+  Recovery validation
+      |
+      v
+  Controlled simulation rerun
+
+
+POST-RECOVERY STATE
+-------------------
+The compromised endpoint remains separate from the recovered
+endpoint until evidence preservation is complete.
+
+The recovered endpoint is the trusted replacement and is based
+on the known-good pre-incident baseline AMI.
+
+
+
+
+
+POST-RECOVERY VALIDATION
+------------------------
+2026-09-09 13:04:24 IST
+Recovery assessment executed on recovered-endpoint.
+
+The endpoint was provisioned from the known-good baseline AMI
+captured before the controlled attack simulation.
+
+Sudo-group state:
+  CLEAN — ssm-user is not currently listed in the sudo group.
+
+Root crontab:
+  CLEAN — no root crontab is present and the simulated persistence
+  entry is absent.
+
+Root cron spool:
+  CLEAN — no root-owned cron spool file was found.
+
+Persistence execution artifact:
+  CLEAN — /tmp/soc-lab.log does not exist.
+
+Targeted persistence search:
+  CLEAN — no additional cron location contains the known
+  SOC_LAB_PERSISTENCE_TEST marker.
+
+FINAL RECOVERY DECISION
+-----------------------
+DECISION       : NO KNOWN PERSISTENCE FOUND
+RECOVERY STATE : ASSESSMENT
+
+The artifacts associated with the specific simulated persistence
+chain were not observed on the recovered endpoint.
+
+The recovered endpoint is based on the known-good pre-incident
+baseline AMI and passed the targeted recovery assessment.
+
+RECOVERY STATUS
+---------------
+The replacement endpoint is ready for the controlled detection
+test and subsequent return-to-service validation.
