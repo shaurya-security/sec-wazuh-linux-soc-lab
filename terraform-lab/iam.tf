@@ -26,8 +26,6 @@ resource "aws_iam_instance_profile" "ec2_ssm" {
   role = aws_iam_role.ec2_ssm_role.name
 }
 
-
-
 resource "aws_iam_role_policy" "userdata_s3_read" {
   name = "userdata-s3-read"
   role = aws_iam_role.ec2_ssm_role.id
@@ -37,7 +35,7 @@ resource "aws_iam_role_policy" "userdata_s3_read" {
     Statement = [{
       Effect   = "Allow"
       Action   = "s3:GetObject"
-      Resource = "arn:aws:s3:::shaurya-terraform-userdata-2026/*"
+      Resource = "arn:aws:s3:::${var.userdata_bucket}/*"
     }]
   })
 }
@@ -51,7 +49,6 @@ resource "time_sleep" "wait_for_iam" {
     aws_iam_role_policy_attachment.ec2_ssm
   ]
 }
-
 
 resource "aws_iam_role_policy" "wazuh_security_group" {
   name = "wazuh-security-group"

@@ -9,7 +9,8 @@ locals {
   ]
 }
 
-# Upload userdata scripts and track file changes via MD5 hash
+# Upload userdata scripts and track file changes via MD5 hash.
+# The bucket itself is not managed here; it must already exist (see var.userdata_bucket).
 resource "aws_s3_object" "userdata_scripts" {
   for_each = toset(local.userdata_scripts)
 

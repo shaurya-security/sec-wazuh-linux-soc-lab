@@ -1,5 +1,11 @@
-data "aws_ami" "amazon_linux" {
+########################################
+# Amazon Linux 2023 lookup
+#
+# Not referenced by any resource: var.linux_ami_id is pinned in variables.tf.
+# Kept for finding a newer AL2023 AMI to pin.
+########################################
 
+data "aws_ami" "amazon_linux" {
   most_recent = true
   owners      = ["amazon"]
 
@@ -27,10 +33,10 @@ data "aws_ami" "amazon_linux" {
   }
 }
 
+########################################
+# Operator public IP (allow-list source)
+########################################
 
 data "http" "my_public_ip" {
   url = "https://ipv4.icanhazip.com"
-
 }
-
-

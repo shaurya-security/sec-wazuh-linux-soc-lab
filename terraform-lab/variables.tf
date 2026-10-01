@@ -4,26 +4,28 @@ variable "linux_ami_id" {
   default     = "ami-094210f044117049d"
 }
 
-
 variable "vpc_cidr" {
-  type    = string
-  default = "10.0.0.0/16"
+  description = "CIDR block for the lab VPC."
+  type        = string
+  default     = "10.0.0.0/16"
 }
 
 variable "public_subnet_cidr" {
-  type    = string
-  default = "10.0.1.0/24"
+  description = "CIDR block for the public subnet (must sit inside vpc_cidr)."
+  type        = string
+  default     = "10.0.1.0/24"
 }
 
 variable "owner" {
-  type    = string
-  default = "shaurya"
+  description = "Prefix used in resource Name tags."
+  type        = string
+  default     = "shaurya"
 }
 
-
 variable "userdata_bucket" {
-  type    = string
-  default = "shaurya-terraform-userdata-2026"
+  description = "Existing S3 bucket that holds the bootstrap scripts. Not created by this repo; it must exist before apply."
+  type        = string
+  default     = "shaurya-terraform-userdata-2026"
 }
 
 variable "wazuh_registration_password" {
@@ -36,7 +38,6 @@ variable "wazuh_registration_password" {
   sensitive   = true
   default     = ""
 }
-
 
 variable "wazuh_agent_version" {
   description = "Pinned Wazuh agent package version, e.g. 4.14.7-1"
@@ -51,7 +52,7 @@ variable "wazuh_agent_name" {
 }
 
 variable "linux_endpoint_baseline_ami_id" {
-  description = "Known-good Amazon Linux AMI used for Linux endpoints"
+  description = "Known-good baseline AMI for the recovery endpoint. The default is the AMI from the recorded run and will not exist in another account; override it."
   type        = string
   default     = "ami-0d58340cece29dd98"
 }

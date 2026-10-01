@@ -61,7 +61,6 @@ resource "aws_route_table_association" "public_association" {
   route_table_id = aws_route_table.public_rtb.id
 }
 
-
 ########################################
 # Wazuh Security Group
 ########################################
@@ -95,7 +94,7 @@ resource "aws_security_group" "wazuh_sg" {
     from_port   = 443
     to_port     = 443
     protocol    = "tcp"
-    cidr_blocks = ["${chomp(data.http.my_public_ip.response_body)}/32"]
+    cidr_blocks = [local.operator_cidr]
   }
 
   egress {
@@ -107,14 +106,12 @@ resource "aws_security_group" "wazuh_sg" {
   }
 }
 
-
-
 ########################################
 # Linux Endpoint Security Group
 ########################################
 
 resource "aws_security_group" "linux_endpoint_sg" {
-  name        = "${local.sg_name}-linux-endpoint"
+  name        = local.linux_endpoint_sg_name
   description = "Linux SOC endpoint"
   vpc_id      = aws_vpc.main.id
 
@@ -124,7 +121,7 @@ resource "aws_security_group" "linux_endpoint_sg" {
     from_port   = 22
     to_port     = 22
     protocol    = "tcp"
-    cidr_blocks = ["${chomp(data.http.my_public_ip.response_body)}/32"]
+    cidr_blocks = [local.operator_cidr]
   }
 
   egress {

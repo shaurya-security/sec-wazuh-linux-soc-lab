@@ -12,7 +12,9 @@ locals {
   )
 }
 
-# Main Bucket with force_destroy enabled for smooth tear-downs
+# Remote state bucket, force_destroy enabled for smooth tear-downs.
+# NOTE: enable_versioning, bucket_force_destroy and kms_key_arn are declared in
+# variables.tf but not wired to any resource yet.
 resource "aws_s3_bucket" "terraform_state" {
   bucket        = local.bucket_name
   force_destroy = true

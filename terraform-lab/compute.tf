@@ -1,3 +1,7 @@
+########################################
+# Wazuh Manager (Amazon Linux 2023)
+########################################
+
 resource "aws_instance" "wazuh" {
   ami                         = var.linux_ami_id
   instance_type               = "m7i-flex.large"
@@ -20,16 +24,19 @@ resource "aws_instance" "wazuh" {
     script_hash = filemd5("${path.module}/userdata/wazuh.sh")
     timezone    = "Asia/Kolkata"
   })
+
   metadata_options {
     http_endpoint = "enabled"
     http_tokens   = "required"
   }
+
   root_block_device {
     volume_size           = 50
     volume_type           = "gp3"
     encrypted             = true
     delete_on_termination = true
   }
+
   tags = { Name = local.wazuh_ec2_name }
 }
 
@@ -53,12 +60,10 @@ resource "aws_instance" "linux_endpoint" {
     aws_instance.wazuh
   ]
 
-  # User data now runs common.sh AND linux-endpoint.sh, with the Wazuh
-  # manager address, pinned agent version, and (optional, currently unused)
-  # enrollment password supplied explicitly by Terraform — the same
-  # architectural pattern used for the Windows endpoint's WazuhManagerIP
-  # parameter. wazuh_registration_password defaults to "" because wazuh.sh
-  # doesn't configure authd to require one.
+  # User data runs common.sh and then linux-endpoint.sh. Terraform supplies the
+  # manager address, pinned agent version and agent name explicitly.
+  # wazuh_registration_password is optional and defaults to "" because wazuh.sh
+  # does not configure authd to require one.
   user_data = templatefile("${path.module}/userdata/linux-endpoint.sh.tpl", {
     s3_bucket                   = var.userdata_bucket
     common_hash                 = filemd5("${path.module}/userdata/common.sh")
@@ -73,21 +78,23 @@ resource "aws_instance" "linux_endpoint" {
     http_endpoint = "enabled"
     http_tokens   = "required"
   }
+
   root_block_device {
     volume_size           = 20
     volume_type           = "gp3"
     encrypted             = true
     delete_on_termination = true
   }
+
   tags = {
     Name = "${local.ec2_name}-linux-endpoint"
   }
 }
 
-
 ########################################
 # Linux Endpoint - Recovery Replacement
-# Created from known-good pre-compromise AMI
+# Created from the known-good pre-compromise AMI.
+# No user_data: the agent and its configuration are already in the image.
 ########################################
 resource "aws_instance" "linux_endpoint_recovery" {
   ami                    = var.linux_endpoint_baseline_ami_id

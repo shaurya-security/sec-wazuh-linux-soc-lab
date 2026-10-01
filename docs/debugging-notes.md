@@ -1,4 +1,18 @@
-# SOC Lab — Debugging & Recovery Notes
+# 🧰 SOC Lab: Debugging & Recovery Notes
+
+> **Point-in-time working notes.** Written while building the lab, kept as a record of how decisions were made. Where they differ from the current code or preserved evidence, the code and evidence win. Known differences:
+>
+> | These notes say | Code / evidence show |
+> |---|---|
+> | Final working chain was `110010 → 5402 → 5402 → 110012` | Preserved alerts show `5402 → 110011 → 110011 → 110012`. No `110010` alert is preserved. See [`detection-rules.md`](detection-rules.md). |
+> | `bat` tarball is verified with `sha256sum -c` (item 5) | `common.sh` verifies the Starship tarball only. `bat` is installed without a checksum check. |
+> | FIM/auditd step uses an `awk` comment-aware counter | `linux-endpoint.sh` now rewrites `ossec.conf` with Python regexes and strips existing `syscheck` and audit `localfile` blocks first. |
+> | `output_time_ist` was reworked to stop plan noise | `output.tf` still uses `timestamp()`, so it changes on every plan. |
+> | A custom auditd-stop rule (T1562.001, placeholder `80730`) was pinned | `wazuh.sh` deploys only `110010`, `110011` and `110012`. |
+>
+> Related: [`architecture.md`](architecture.md) · [`incident-report.md`](incident-report.md) · [`lessons-learned.md`](lessons-learned.md)
+
+---
 
 *Personal notes. Compiled from working sessions on the Wazuh SOC lab (Terraform / AWS / Wazuh). Covers two threads: the incident recovery playbook (decisions) and the infra/detection debugging (executions).*
 
